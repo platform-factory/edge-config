@@ -1,0 +1,7 @@
+host: hello
+service: svc-hello
+port: 80
+---
+host: other
+service: svc-other
+port: 80

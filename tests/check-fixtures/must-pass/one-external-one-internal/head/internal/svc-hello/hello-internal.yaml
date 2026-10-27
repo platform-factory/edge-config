@@ -1,0 +1,3 @@
+host: hello-internal
+service: svc-hello
+port: 80

@@ -1,0 +1,4 @@
+host: hello
+service: svc-hello
+port: 80
+exposure: internal

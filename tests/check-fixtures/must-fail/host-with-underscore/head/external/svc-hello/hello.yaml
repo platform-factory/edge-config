@@ -1,0 +1,3 @@
+host: hello_world
+service: svc-hello
+port: 80

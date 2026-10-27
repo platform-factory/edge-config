@@ -1,0 +1,4 @@
+# A System name and nothing else: this check reads only the file names in a systems
+# checkout's tenants/ (scripts/check_routes.py, rule [system]).
+metadata:
+  name: svc-hello
