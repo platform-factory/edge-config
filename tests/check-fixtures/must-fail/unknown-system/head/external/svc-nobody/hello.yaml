@@ -1,0 +1,3 @@
+host: hello
+service: svc-nobody
+port: 80

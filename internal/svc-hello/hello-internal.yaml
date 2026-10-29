@@ -1,0 +1,17 @@
+# svc-hello's internal route: http://hello-internal.internal.ref.thecloudgeek.io
+# (ADR-0021 §2). Internal means the internal Gateway, the private zone and no
+# TLS in M3 (ADR-0021 §4).
+#
+# The host differs from the external route's because a host may appear once in
+# the whole repo (scripts/check_routes.py): the wildcard record of the public
+# zone also answers names under the internal zone, so one name in both folders
+# would be two routes for one label (ADR-0021, Consequences).
+#
+# The internal-to-external flip is one `git mv` of this file into
+# external/svc-hello/, which changes nothing in it. That needs the external
+# folder not to hold a route of the same name already, nor another route naming
+# the same Service, because GKE attaches one GCPBackendPolicy to a Service at a
+# time (ADR-0021 §7).
+host: hello-internal
+service: svc-hello
+port: 80

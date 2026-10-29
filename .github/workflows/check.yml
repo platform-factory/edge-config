@@ -1,0 +1,56 @@
+# The edge-config repo's check (ADR-0021 §2; ADR-0019 §4; C-10).
+#
+# One job. It first proves the checker can fail, then checks every route file
+# against the System names in the systems repo.
+#
+# Advisory until it has failed once and passed once on a real pull request.
+# After that it becomes a required status check, which is a ruleset change made
+# by hand and recorded in platform-factory/.github (ADR-0021 §10): this file
+# cannot make itself required. What each rule checks, and why, is at the top of
+# scripts/check_routes.py.
+#
+# The job name below, `route files`, is the status check's name. Changing it
+# detaches the ruleset from the check, so a pull request that renames it is
+# also one that edits the workflow producing the required check, which is a
+# case C-09 runs.
+name: check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  routes:
+    name: route files
+    runs-on: ubuntu-latest
+    # The two checkouts sit side by side, so the systems repo's YAML is not
+    # inside the tree the check walks: a checkout under this repo's root would
+    # be refused by [layout], file by file.
+    defaults:
+      run:
+        working-directory: edge-config
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: edge-config
+
+      # The System names a route folder may name. The systems repo is public,
+      # so no token is needed.
+      - uses: actions/checkout@v4
+        with:
+          repository: platform-factory/systems
+          ref: main
+          path: systems
+
+      # A check that has never been seen to fail is not evidence
+      # (ADR-0019 §4): every known-bad fixture must be refused, by the rule it
+      # names, before this job's green result on the repo means anything.
+      - name: The checker refuses every known-bad fixture
+        run: python3 scripts/check_routes.py --self-test
+
+      - name: Check the route files
+        run: python3 scripts/check_routes.py --systems ../systems

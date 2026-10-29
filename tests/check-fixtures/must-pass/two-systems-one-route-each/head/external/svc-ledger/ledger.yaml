@@ -1,0 +1,4 @@
+host: ledger
+service: svc-ledger
+port: 8080
+path: /api/v1

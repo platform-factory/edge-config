@@ -1,0 +1,3 @@
+host: first
+service: svc-hello
+port: 80
