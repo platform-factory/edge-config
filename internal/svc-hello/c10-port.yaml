@@ -1,0 +1,4 @@
+# C-10 adversarial case (M3 readiness note). Must be refused.
+host: c10-port
+service: svc-hello
+port: "80"
