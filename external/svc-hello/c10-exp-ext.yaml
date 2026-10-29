@@ -1,0 +1,5 @@
+# C-10 adversarial case (M3 readiness note). Must be refused.
+host: c10-exp-ext
+service: svc-hello
+port: 80
+exposure: internal
