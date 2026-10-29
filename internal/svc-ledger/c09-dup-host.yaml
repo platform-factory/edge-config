@@ -1,0 +1,4 @@
+# C-09 case: a route the check refuses ([host-unique]), with the check skipped.
+host: hello-internal
+service: svc-ledger
+port: 80
