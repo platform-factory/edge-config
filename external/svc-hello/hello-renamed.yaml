@@ -12,6 +12,6 @@
 # folder not to hold a route of the same name already, nor another route naming
 # the same Service, because GKE attaches one GCPBackendPolicy to a Service at a
 # time (ADR-0021 §7).
-host: hello-internal
+host: hello-renamed
 service: svc-hello
 port: 80
