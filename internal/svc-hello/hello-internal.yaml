@@ -9,7 +9,9 @@
 #
 # The internal-to-external flip is one `git mv` of this file into
 # external/svc-hello/, which changes nothing in it. That needs the external
-# folder not to hold a route of the same name already.
+# folder not to hold a route of the same name already, nor another route naming
+# the same Service, because GKE attaches one GCPBackendPolicy to a Service at a
+# time (ADR-0021 §7).
 host: hello-internal
 service: svc-hello
 port: 80

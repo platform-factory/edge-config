@@ -9,13 +9,14 @@ A route is one file, `<exposure>/<system>/<route>.yaml`, with `<exposure>` eithe
 [`systems`](https://github.com/platform-factory/systems) `tenants/`:
 
 ```
-external/
-└── svc-hello/
-    └── hello.yaml            host: hello, service: svc-hello, port: 80
 internal/
 └── svc-hello/
     └── hello-internal.yaml   host: hello-internal, service: svc-hello, port: 80
 ```
+
+`external/` is empty until the required-reviewer rule is live: the first
+external route is one of C-13's merges, made under that rule (the M3 readiness
+note in the claims register).
 
 The file has four fields: `host`, a label (`^[a-z][a-z0-9-]{0,30}[a-z0-9]$`),
 `service`, a Service in the System's namespace, `port`, an integer, and

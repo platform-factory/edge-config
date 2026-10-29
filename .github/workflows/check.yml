@@ -27,8 +27,16 @@ jobs:
   routes:
     name: route files
     runs-on: ubuntu-latest
+    # The two checkouts sit side by side, so the systems repo's YAML is not
+    # inside the tree the check walks: a checkout under this repo's root would
+    # be refused by [layout], file by file.
+    defaults:
+      run:
+        working-directory: edge-config
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: edge-config
 
       # The System names a route folder may name. The systems repo is public,
       # so no token is needed.
@@ -36,7 +44,7 @@ jobs:
         with:
           repository: platform-factory/systems
           ref: main
-          path: systems-repo
+          path: systems
 
       # A check that has never been seen to fail is not evidence
       # (ADR-0019 §4): every known-bad fixture must be refused, by the rule it
@@ -45,4 +53,4 @@ jobs:
         run: python3 scripts/check_routes.py --self-test
 
       - name: Check the route files
-        run: python3 scripts/check_routes.py --systems systems-repo
+        run: python3 scripts/check_routes.py --systems ../systems
